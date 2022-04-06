@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateTransferencias1649117522189 implements MigrationInterface {
+export class CreateTimesTorneio1649202667012 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'transferencias',
+        name: 'times_torneio',
         columns: [
           {
             name: 'id',
@@ -19,26 +19,12 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'jogador',
+            name: 'torneio',
             type: 'uuid',
           },
           {
-            name: 'time_origem',
+            name: 'time',
             type: 'uuid',
-          },
-          {
-            name: 'time_destino',
-            type: 'uuid',
-          },
-          {
-            name: 'data',
-            type: 'date',
-          },
-          {
-            name: 'valor',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
           },
           {
             name: 'created_at',
@@ -55,9 +41,9 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'transferencias',
+      'times_torneio',
       new TableForeignKey({
-        columnNames: ['time_origem'],
+        columnNames: ['time'],
         referencedColumnNames: ['id'],
         referencedTableName: 'times',
         onDelete: 'CASCADE',
@@ -65,27 +51,17 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'transferencias',
+      'times_torneio',
       new TableForeignKey({
-        columnNames: ['time_destino'],
+        columnNames: ['torneio'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'times',
-        onDelete: 'CASCADE',
-      }),
-    );
-
-    await queryRunner.createForeignKey(
-      'transferencias',
-      new TableForeignKey({
-        columnNames: ['jogador'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'jogadores',
+        referencedTableName: 'torneios',
         onDelete: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('transferencias');
+    await queryRunner.dropTable('times_torneio');
   }
 }

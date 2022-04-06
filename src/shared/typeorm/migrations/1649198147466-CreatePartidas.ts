@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class CreateTransferencias1649117522189 implements MigrationInterface {
+export class CreatePartidas1649198147466 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'transferencias',
+        name: 'partidas',
         columns: [
           {
             name: 'id',
@@ -19,26 +19,32 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'jogador',
-            type: 'uuid',
-          },
-          {
-            name: 'time_origem',
-            type: 'uuid',
-          },
-          {
-            name: 'time_destino',
-            type: 'uuid',
-          },
-          {
             name: 'data',
             type: 'date',
           },
           {
-            name: 'valor',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
+            name: 'local',
+            type: 'varchar',
+          },
+          {
+            name: 'torneio',
+            type: 'uuid',
+          },
+          {
+            name: 'time_casa',
+            type: 'uuid',
+          },
+          {
+            name: 'gols_casa',
+            type: 'int',
+          },
+          {
+            name: 'time_visitante',
+            type: 'uuid',
+          },
+          {
+            name: 'gols_visitante',
+            type: 'int',
           },
           {
             name: 'created_at',
@@ -55,9 +61,9 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'transferencias',
+      'partidas',
       new TableForeignKey({
-        columnNames: ['time_origem'],
+        columnNames: ['time_casa'],
         referencedColumnNames: ['id'],
         referencedTableName: 'times',
         onDelete: 'CASCADE',
@@ -65,9 +71,9 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'transferencias',
+      'partidas',
       new TableForeignKey({
-        columnNames: ['time_destino'],
+        columnNames: ['time_visitante'],
         referencedColumnNames: ['id'],
         referencedTableName: 'times',
         onDelete: 'CASCADE',
@@ -75,17 +81,17 @@ export class CreateTransferencias1649117522189 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'transferencias',
+      'partidas',
       new TableForeignKey({
-        columnNames: ['jogador'],
+        columnNames: ['torneio'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'jogadores',
+        referencedTableName: 'torneios',
         onDelete: 'CASCADE',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('transferencias');
+    await queryRunner.dropTable('partidas');
   }
 }

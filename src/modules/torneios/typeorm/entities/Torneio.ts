@@ -6,25 +6,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('jogadores')
-class Transferencia {
+@Entity('torneios')
+class Torneio {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
-  jogador: string;
-
-  @Column('uuid')
-  time_origem: string;
-
-  @Column('uuid')
-  time_destino: string;
-
   @Column()
-  data: Date;
+  nome: string;
+
+  @Column('int')
+  quantidade_times: number;
 
   @Column('decimal')
-  valor: number;
+  premio: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -33,4 +27,4 @@ class Transferencia {
   updated_at: Date;
 }
 
-export default Transferencia;
+export default Torneio;

@@ -1,3 +1,4 @@
+import { JogadorRepository } from '@modules/jogadores/typeorm/repositories/JogadoresRepository';
 import { TimeRepository } from '@modules/times/typeorm/repositories/TimesRepository';
 import AppError from '@shared/errors/AppError';
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
@@ -53,7 +54,7 @@ export class TransferenciaRepository extends Repository<Transferencia> {
     const timeExists = await timesRepository.findByName(time_destino);
 
     if (!timeExists) {
-      throw new AppError('Time Origem not found.');
+      throw new AppError('Time Destino not found.');
     }
 
     time_destino = timeExists.id;
@@ -61,6 +62,27 @@ export class TransferenciaRepository extends Repository<Transferencia> {
     const transferencia = this.findOne({
       where: {
         time_destino,
+      },
+    });
+
+    return transferencia;
+  }
+
+  public async findByTimeJogador(
+    jogador: string,
+  ): Promise<Transferencia | undefined> {
+    const jogadorRepository = getCustomRepository(JogadorRepository);
+    const jogadorExists = await jogadorRepository.findByName(jogador);
+
+    if (!jogadorExists) {
+      throw new AppError('Jogador not found.');
+    }
+
+    jogador = jogadorExists.id;
+
+    const transferencia = this.findOne({
+      where: {
+        jogador,
       },
     });
 

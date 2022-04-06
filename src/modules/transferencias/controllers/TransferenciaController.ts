@@ -25,11 +25,12 @@ export default class TransferenciasController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { time_origem, time_destino, data, valor } = request.body;
+    const { jogador, time_origem, time_destino, data, valor } = request.body;
 
     const createTransferencia = new CreateTransferenciaService();
 
     const transferencia = await createTransferencia.execute({
+      jogador,
       time_origem,
       time_destino,
       data,
@@ -40,13 +41,14 @@ export default class TransferenciasController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { time_origem, time_destino, data, valor } = request.body;
+    const { jogador, time_origem, time_destino, data, valor } = request.body;
     const { id } = request.params;
 
     const updateTransferencia = new UpdateTransferenciaService();
 
     const transferencia = await updateTransferencia.execute({
       id,
+      jogador,
       time_origem,
       time_destino,
       data,

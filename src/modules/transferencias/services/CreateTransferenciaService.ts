@@ -1,3 +1,4 @@
+import { JogadorRepository } from '@modules/jogadores/typeorm/repositories/JogadoresRepository';
 import { TimeRepository } from '@modules/times/typeorm/repositories/TimesRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
@@ -5,6 +6,7 @@ import Transferencia from '../typeorm/entities/Transferencia';
 import { TransferenciaRepository } from '../typeorm/repositories/TransferenciasRepository';
 
 interface IRequest {
+  jogador: string;
   time_origem: string;
   time_destino: string;
   data: Date;
@@ -13,6 +15,7 @@ interface IRequest {
 
 class CreateTransferenciaService {
   public async execute({
+    jogador,
     time_origem,
     time_destino,
     data,
@@ -21,6 +24,15 @@ class CreateTransferenciaService {
     const transferenciasRepository = getCustomRepository(
       TransferenciaRepository,
     );
+    const jogadorRepository = getCustomRepository(JogadorRepository);
+    const jogadorExists = await jogadorRepository.findByName(jogador);
+
+    if (!jogadorExists) {
+      throw new AppError('Jogador not found.');
+    }
+
+    jogador = jogadorExists.id;
+
     const timesRepository = getCustomRepository(TimeRepository);
     const timeOrigemExists = await timesRepository.findByName(time_origem);
 
@@ -39,6 +51,7 @@ class CreateTransferenciaService {
     time_destino = timeDestinoExists.id;
 
     const transferencia = transferenciasRepository.create({
+      jogador,
       time_origem,
       time_destino,
       data,
