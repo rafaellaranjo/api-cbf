@@ -1,9 +1,16 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import TimesController from '../controllers/TimesController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 
 const timesRouter = Router();
 const timesController = new TimesController();
+
+timesRouter.get('/', isAuthenticated, timesController.index);
+timesRouter.get('/:id', isAuthenticated, timesController.index);
+timesRouter.post('/', isAuthenticated, timesController.index);
+timesRouter.put('/:id', isAuthenticated, timesController.index);
+timesRouter.delete('/:id', isAuthenticated, timesController.index);
 
 timesRouter.get('/', timesController.index);
 

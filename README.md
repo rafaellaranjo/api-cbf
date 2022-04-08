@@ -1,5 +1,6 @@
 # api-cbf
 
+## Rafael Bisinotto Laranjo (140662)
 ## Build Setup
 
 ```bash
@@ -21,4 +22,9 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+
+# Open API Postman
+https://www.postman.com/rafaellaranjo-api-cbf/workspace/api-cbf/collection/9746262-7a005a22-95dd-410f-a97c-4c5c2e1bf516?ctx=documentation
+
+Necessario criar usuario e fazer autenticação, utilizar Bearer Token
 ```

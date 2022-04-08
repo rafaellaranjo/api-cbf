@@ -1,9 +1,28 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import TransferenciasController from '../controllers/TransferenciaController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 
 const transferenciasRouter = Router();
 const transferenciasController = new TransferenciasController();
+
+transferenciasRouter.get('/', isAuthenticated, transferenciasController.index);
+transferenciasRouter.post('/', isAuthenticated, transferenciasController.index);
+transferenciasRouter.get(
+  '/:id',
+  isAuthenticated,
+  transferenciasController.index,
+);
+transferenciasRouter.put(
+  '/:id',
+  isAuthenticated,
+  transferenciasController.index,
+);
+transferenciasRouter.delete(
+  '/:id',
+  isAuthenticated,
+  transferenciasController.index,
+);
 
 transferenciasRouter.get('/', transferenciasController.index);
 
@@ -21,6 +40,7 @@ transferenciasRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
+      jogador: Joi.string().required(),
       time_origem: Joi.string().required(),
       time_destino: Joi.string().required(),
       data: Joi.string().required(),
@@ -34,6 +54,7 @@ transferenciasRouter.put(
   '/:id',
   celebrate({
     [Segments.BODY]: {
+      jogador: Joi.string().required(),
       time_origem: Joi.string().required(),
       time_destino: Joi.string().required(),
       data: Joi.string().required(),

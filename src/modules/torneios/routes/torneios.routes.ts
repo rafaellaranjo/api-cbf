@@ -1,9 +1,16 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import TorneiosController from '../controllers/TorneiosController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 
 const torneiosRouter = Router();
 const torneiosController = new TorneiosController();
+
+torneiosRouter.get('/', isAuthenticated, torneiosController.index);
+torneiosRouter.get('/:id', isAuthenticated, torneiosController.index);
+torneiosRouter.post('/', isAuthenticated, torneiosController.index);
+torneiosRouter.put('/:id', isAuthenticated, torneiosController.index);
+torneiosRouter.delete('/:id', isAuthenticated, torneiosController.index);
 
 torneiosRouter.get('/', torneiosController.index);
 

@@ -19,6 +19,10 @@ export class CreateJogadores1649114900263 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'nome',
+            type: 'varchar',
+          },
+          {
             name: 'data_nascimento',
             type: 'date',
           },

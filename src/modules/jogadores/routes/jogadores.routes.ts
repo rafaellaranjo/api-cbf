@@ -1,9 +1,16 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import JogadoresController from '../controllers/JogadoresController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 
 const jogadoresRouter = Router();
 const jogadoresController = new JogadoresController();
+
+jogadoresRouter.get('/', isAuthenticated, jogadoresController.index);
+jogadoresRouter.get('/:id', isAuthenticated, jogadoresController.index);
+jogadoresRouter.post('/', isAuthenticated, jogadoresController.index);
+jogadoresRouter.put('/:id', isAuthenticated, jogadoresController.index);
+jogadoresRouter.delete('/:id', isAuthenticated, jogadoresController.index);
 
 jogadoresRouter.get('/', jogadoresController.index);
 

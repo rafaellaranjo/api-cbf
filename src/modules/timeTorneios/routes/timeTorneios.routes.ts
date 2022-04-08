@@ -1,9 +1,20 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import TimeTorneiosController from '../controllers/TimeTorneioController';
+import isAuthenticated from '../../../shared/http/middlewares/isAuthenticated';
 
 const timeTorneiosRouter = Router();
 const timeTorneiosController = new TimeTorneiosController();
+
+timeTorneiosRouter.get('/', isAuthenticated, timeTorneiosController.index);
+timeTorneiosRouter.post('/', isAuthenticated, timeTorneiosController.index);
+timeTorneiosRouter.get('/:id', isAuthenticated, timeTorneiosController.index);
+timeTorneiosRouter.put('/:id', isAuthenticated, timeTorneiosController.index);
+timeTorneiosRouter.delete(
+  '/:id',
+  isAuthenticated,
+  timeTorneiosController.index,
+);
 
 timeTorneiosRouter.get('/', timeTorneiosController.index);
 
